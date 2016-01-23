@@ -10,10 +10,12 @@ function PickUp(events) {
   this.filters = events;
   this.listeners = [];
 
-  createSonicNetwork();
+  this._createSonicNetwork();
 }
 
-function createSonicNetwork(opt_coder) {
+util.inherits(PickUp, EventEmitter);
+
+PickUp.prototype._createSonicNetwork = function(opt_coder) {
   // Stop the sonic server if it is listening.
   var ALPHABET = "123456";
   this.sonicServer = new SonicServer({alphabet: ALPHABET, debug: false});
@@ -21,9 +23,9 @@ function createSonicNetwork(opt_coder) {
 
   this.sonicServer.start();
   console.log(this.sonicServer);
-  this.sonicServer.on('message', messageDelegator);
+  this.sonicServer.on('message', this._messageDelegator);
 }
-function messageDelegator(x) {
+PickUp.prototype._messageDelegator = function(x) {
   console.log("MESSAGE RECEIVED");
   console.log(x);
   for(event in this.filters){
@@ -31,17 +33,8 @@ function messageDelegator(x) {
             this.emit(event);
       }
   }
-  //Iterate through all listeners, and call callbacks
-/*
-  
-  for(var i = 0; i < this.listeners.length; i++) {
-    var obj = this.listeners[i];
-    if (obj.char === x) {
-      (obj.callback)();
-    }
-  }
-*/
 }
+
 //Listening
 PickUp.prototype.listenFor = function(event, regex) {
     this.filters[event] = regex;
@@ -60,16 +53,8 @@ PickUp.prototype.listenForSequence = function(tones, duration, callback) {
 
 //Broadcasting
 
-PickUp.prototype.broadcast = function(message, callback) {
-  alert("CALLED");
-  this.sonicSocket.send(message.toString());
-    callback();
-}
-
-PickUp.prototype.broadcast = function(message, options, callback) {
-  alert("CALLED");
-  this.sonicSocket.send(message.toString());
-  callback();
+PickUp.prototype.broadcast = function(message, options) {
+    this.sonicSocket.send(message.toString());
 }
 
 //Both

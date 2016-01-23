@@ -1,12 +1,15 @@
 var PickUp = require("./main.js");
+var $ = require("jquery");
 
 var opts = {"message": /.+/};
 var xx = new PickUp(opts);
 
-xx.listen("message", function(message){
+xx.on("message", function(message){
     alert(message);
 });
 
-xx.broadcast(0,null,function() {
-	alert("HI");
+$(document).ready(function(){
+    $("#clicker").click(function(){
+        xx.broadcast("42", {});
+    })
 });

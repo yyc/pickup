@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "Ultrasonic pairing for webapps",
   "main": "server.js",
-  "dependencies": {},
+  "dependencies": {
+    "jquery": "^2.2.0"
+  },
   "devDependencies": {
     "browserify": "^13.0.0",
     "browserify-shim": "^3.8.12",
