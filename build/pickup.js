@@ -490,8 +490,7 @@ module.exports = SonicSocket;
 var SonicNet = require("./lib/main.js");
 
 function PickUp() {
-
-
+    
 
 
 }
