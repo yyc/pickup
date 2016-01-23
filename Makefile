@@ -1,3 +1,2 @@
 default: 
-	browserify src/* -o js/
-	browserify ourtest.js -o woo.js
+	browserify ./src/*.js -o ./js/app.js

@@ -480,7 +480,7 @@ var SonicSocket = require('./lib/sonic-socket.js');
 var SonicServer = require('./lib/sonic-server.js');
 var SonicCoder = require('./lib/sonic-coder.js');
 function PickUp() {
-    alert("it werk");
+    alert("hello it's me");
     var sonicSoc = 1;
     var sonicSer = 2;
 }
