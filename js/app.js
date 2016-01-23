@@ -11354,6 +11354,7 @@ PickUp.prototype._messageDelegator = function(x) {
   console.log("MESSAGE RECEIVED");
   console.log(x);
   for(event in this.filters){
+      console.log(event);
       if(x.match(this.filters[event])){
             this.emit(event);
       }
