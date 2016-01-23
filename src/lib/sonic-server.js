@@ -197,7 +197,7 @@ SonicServer.prototype.analysePeaks = function() {
   } else if (this.state == State.RECV) {
     // If receiving, look for character changes.
     if (char != this.lastChar &&
-        char != this.coder.startChar && char != this.coder.endChar) {
+        char != this.coder.startChar && char != '#' && char != this.coder.endChar) {
       this.buffer += char;
       this.lastChar = char;
       this.fire_(this.callbacks.character, char);
