@@ -12,9 +12,8 @@ var audioContext = new window.AudioContext || new webkitAudioContext();
  */
 function SonicSocket(params) {
   params = params || {};
-  this.coder = params.coder || new SonicCoder();
-  this.charDuration = params.charDuration || 0.2;
   this.coder = params.coder || new SonicCoder(params);
+  this.charDuration = params.charDuration || 0.2;
   this.rampDuration = params.rampDuration || 0.001;
 }
 
