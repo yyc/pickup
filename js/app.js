@@ -11345,8 +11345,8 @@ util.inherits(PickUp, EventEmitter);
 
 PickUp.prototype._createSonicNetwork = function(opt_coder) {
   // Stop the sonic server if it is listening.
-  this.sonicServer = new SonicServer({debug: true, freqMin: 19500, freqMax: 20600});
-  this.sonicSocket = new SonicSocket({freqMin: 19500, freqMax: 20600});
+  this.sonicServer = new SonicServer({debug: true, freqMin: 19500, freqMax: 20500});
+  this.sonicSocket = new SonicSocket({freqMin: 19500, freqMax: 20500});
 
   this.sonicServer.start();
   console.log(this.sonicServer);
