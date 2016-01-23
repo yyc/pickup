@@ -43,7 +43,7 @@ PickUp.prototype.listenForSequence = function(tones, duration, callback) {
 //Broadcasting
 
 PickUp.prototype.broadcast = function(message, callback) {
-
+  this.sonicSocket.send(message.toString());
     callback();
 }
 
