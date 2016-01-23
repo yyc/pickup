@@ -23,15 +23,38 @@ function createSonicNetwork(opt_coder) {
 function messageDelegator(x) {
   console.log("MESSAGE RECEIVED");
   console.log(x);
+
+  //Iterate through all listeners, and call callbacks
+  for(var i = 0; i < this.listeners.length; i++) {
+    var obj = this.listeners[i];
+    if (obj.char === x) {
+      (obj.callback)();
+    }
+  }
 }
 //Listening
-PickUp.prototype.listenFor = function(tone, callback) {
-  var obj = {type: "tone"};
-  obj.tone = tone;
+PickUp.prototype.listenFor = function(char, callback) {
+  var obj = {type: "char"};
+  obj.char = char;
+  obj.callback = callback;
 
   this.listeners.push(obj);
+}
 
-  callback();
+PickUp.prototype.removeListenerChar = function(char) {
+  // find listener(s)
+  var indexesToRemove = [];
+
+  for (var i = 0; i < this.listeners.length; i++) {
+    var obj = this.listeners[i];
+    if (obj.char === char) {
+      indexesToRemove.push(i);
+    }
+  }
+
+  for(var w = 0; w < indexesToRemove.length; w++) {
+    this.listeners.splice(indexesToRemove[w],1);
+  }
 }
 
 PickUp.prototype.listenForSequence = function(tones, duration, callback) {
@@ -43,6 +66,7 @@ PickUp.prototype.listenForSequence = function(tones, duration, callback) {
 //Broadcasting
 
 PickUp.prototype.broadcast = function(message, callback) {
+  alert("CALLED");
   this.sonicSocket.send(message.toString());
     callback();
 }
