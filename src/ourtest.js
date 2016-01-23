@@ -8,8 +8,8 @@ $(document).ready(function(){
     xx.on("message", function(message){
         $("#log").append("<li>" + message + "</li>");
     });
-    xx._messageDelegator("omg why");
     $("#clicker").click(function(){
+        xx._messageDelegator($("#msg").val());
         xx.broadcast($("#msg").val(), {});
     })
 });

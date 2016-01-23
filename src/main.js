@@ -42,11 +42,6 @@ PickUp.prototype.listenFor = function(event, regex) {
     this.filters.push({'event': event, 'regex': regex});
 }
 
-PickUp.prototype.removeListenerChar = function(event) {
-  // find listener(s)
-    delete this.filters[event];
-}
-
 //Broadcasting
 
 PickUp.prototype.broadcast = function(message, options) {
