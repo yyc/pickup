@@ -28,8 +28,6 @@ SonicSocket.prototype.send = function(input, opt_callback) {
     input += paraminput[i];
   }
   input += paraminput[paraminput.length - 1] + this.coder.endChar;
-  console.log(input);
-  console.log("SEND");
 
   console.log("inputlen: "+input.length);
 
