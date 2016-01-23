@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="script.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+	</head>
+	<body onLoad="initialize();">
+		<h1>List of Servers</h1>
+		<div id="servers">
+		</div>
+
+		<!-- Buttons -->
+		<div id="options">
+			<button id="refresh" onClick="get_servers();">Refresh</button>
+		</div>
+
+		<!-- Data to be received -->
+		<div id="data"></div>
+
+	</body>
+</html>
