@@ -12,16 +12,13 @@ gulp.task('watch', function() {
 });
 
 gulp.task('browserify', function() {
-    try{
-       var res = browserify('src/main.js')
+       var res = browserify('src/ourtest.js')
           .bundle()
           .pipe(source('app.js'))
-          .pipe(gulp.dest('js'));
-      } catch(error){
-          console.log(error);
-      } finally{
-          return res || undefined;
-      }
+          .pipe(gulp.dest('js'))
+          .on("error", function(error){
+              console.log(error);
+          });
 });
 gulp.task("livereload", function(){
     livereload.reload("index.html");
