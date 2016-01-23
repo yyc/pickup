@@ -1,0 +1,35 @@
+{
+  "name": "pickup.js",
+  "version": "0.0.1",
+  "description": "Ultrasonic pairing for webapps",
+  "main": "server.js",
+  "dependencies": {},
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "browserify-shim": "^3.8.12",
+    "gulp": "^3.9.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-uglify": "^1.5.1",
+    "vinyl-transform": "^1.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yyc/pickup.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yyc/pickup/issues"
+  },
+  "homepage": "https://github.com/yyc/pickup#readme", 
+  "browserify": {
+    "transform": [ "browserify-shim" ]
+  },
+  "browserify-shim": {
+    "./pickup.js":"pickUp",
+    "lib/main.js": {"depends": ["lib/sonic-server.js", "lib/sonic-socket.js", "lib/sonic-coder.js"]}
+  }
+}

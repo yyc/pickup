@@ -4,10 +4,6 @@ var SonicCoder = require('./lib/sonic-coder.js');
 function PickUp() {
     var sonicSoc = 1;
     var sonicSer = 2;
-    
-        
-
-
 }
 PickUp.prototype.xx = 3;
 //Listening
