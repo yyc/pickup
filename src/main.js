@@ -22,7 +22,7 @@ function createSonicNetwork(opt_coder) {
 }
 function messageDelegator(x) {
   console.log("MESSAGE RECEIVED");
-
+  console.log(x);
 }
 //Listening
 PickUp.prototype.listenFor = function(tone, callback) {
