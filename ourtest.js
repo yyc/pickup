@@ -1,4 +1,4 @@
-var PickUp = require("./build/pickup.js")
+var PickUp = require("/build/Pickup.js");
 
 alert("HI");
 

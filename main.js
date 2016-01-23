@@ -5,7 +5,6 @@ function PickUp() {
 
 
 }
-Pickup.prototype.init = TRUE;
 //Listening
 PickUp.prototype.listenFor = function(tone, duration, callback) {
 
