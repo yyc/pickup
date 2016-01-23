@@ -545,4 +545,4 @@ var PickUp = require("./main.js");
 
 var xx = new PickUp();
 
-},{"./main.js":5}]},{},[5,6]);
+},{"./main.js":5}]},{},[6]);
