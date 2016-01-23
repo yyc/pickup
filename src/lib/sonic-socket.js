@@ -20,7 +20,7 @@ function SonicSocket(params) {
 
 SonicSocket.prototype.send = function(input, opt_callback) {
   // Surround the word with start and end characters.
-  //input = this.coder.startChar + input + this.coder.endChar;
+  input = this.coder.startChar + input + this.coder.endChar;
   /*console.log("inputlen: "+input.length);
   paraminput = input;
   input = this.coder.startChar;
