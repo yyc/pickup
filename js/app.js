@@ -11285,13 +11285,10 @@ function SonicSocket(params) {
 SonicSocket.prototype.send = function(input, opt_callback) {
   // Surround the word with start and end characters.
   //input = this.coder.startChar + input + this.coder.endChar;
-  if (this.debug) {
-    console.log('Transcribed char: ' + char);
-  }
   paraminput = input;
   input = this.coder.startChar;
   for(var i = 0; i < paraminput.length - 1; i++) {
-    input += paraminput[i] + "1";
+    input += paraminput[i] + "a";
   }
   input += paraminput[paraminput.length - 1] + this.coder.endChar;
 
@@ -11354,7 +11351,7 @@ PickUp.prototype._createSonicNetwork = function(opt_coder) {
   // Stop the sonic server if it is listening.
   var ALPHABET = "123456";
   this.sonicServer = new SonicServer({alphabet: ALPHABET, debug: true, freqMin: 19500, freqMax: 20600});
-  this.sonicSocket = new SonicSocket({alphabet: ALPHABET, freqMin: 19500, freqMax: 20600});
+  this.sonicSocket = new SonicSocket({alphabet: ALPHABET, debug: true, freqMin: 19500, freqMax: 20600});
 
   this.sonicServer.start();
   console.log(this.sonicServer);
@@ -11389,8 +11386,9 @@ PickUp.prototype.listenForSequence = function(tones, duration, callback) {
 //Broadcasting
 
 PickUp.prototype.broadcast = function(message, options) {
+
+  console.log("broadcast: " + message);
     this.sonicSocket.send(message.toString());
-    console.log("broadcast: " + message);
 }
 
 //Both

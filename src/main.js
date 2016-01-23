@@ -19,7 +19,7 @@ PickUp.prototype._createSonicNetwork = function(opt_coder) {
   // Stop the sonic server if it is listening.
   var ALPHABET = "123456";
   this.sonicServer = new SonicServer({alphabet: ALPHABET, debug: true, freqMin: 19500, freqMax: 20600});
-  this.sonicSocket = new SonicSocket({alphabet: ALPHABET, freqMin: 19500, freqMax: 20600});
+  this.sonicSocket = new SonicSocket({alphabet: ALPHABET, debug: true, freqMin: 19500, freqMax: 20600});
 
   this.sonicServer.start();
   console.log(this.sonicServer);
@@ -54,8 +54,9 @@ PickUp.prototype.listenForSequence = function(tones, duration, callback) {
 //Broadcasting
 
 PickUp.prototype.broadcast = function(message, options) {
+
+  console.log("broadcast: " + message);
     this.sonicSocket.send(message.toString());
-    console.log("broadcast: " + message);
 }
 
 //Both
