@@ -5,16 +5,26 @@
 
 .server {
 	clear: left;
+	height: 100%;
 }
 
 .server > div {
 	float: left;
-	height: 50px;
-	border: 1px solid black;
+	/*border: 1px solid black;*/
 }
 .server-name { width: 250px; }
 .server-connect { width: 100px; }
 .server-status { width: 100px; }
+.server-chat { width: 250px; }
+/* Chat Area */
+
+.server-chat > textarea { width: 190px; }
+.server-chat > div {
+	overflow-y: scroll;
+	word-wrap: break-word;
+	height: 100px;
+	width: 250px;
+}
 
 #options {
 	clear: left;
