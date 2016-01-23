@@ -1,5 +1,3 @@
 default: 
-	browserify main.js -o pickup.js
+	browserify src/* -o js/
 	browserify ourtest.js -o woo.js
-
-
