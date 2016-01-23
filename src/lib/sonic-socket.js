@@ -24,7 +24,7 @@ SonicSocket.prototype.send = function(input, opt_callback) {
   paraminput = input;
   input = this.coder.startChar;
   for(var i = 0; i < paraminput.length - 1; i++) {
-    input += paraminput[i] + "#";
+    input += paraminput[i] + "";
   }
   input += paraminput[paraminput.length - 1] + this.coder.endChar;
   console.log(input);
