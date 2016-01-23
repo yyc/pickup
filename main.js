@@ -1,18 +1,18 @@
-var SonicNet = require("./lib/build/sonicnet.js")
+var SonicNet = require("./lib/main.js");
 
 function PickUp() {
-
-
+    
 
 
 }
+Pickup.prototype.init = TRUE;
 //Listening
-PickUp.prototype.listenFor(tone, duration, callback) {
+PickUp.prototype.listenFor = function(tone, duration, callback) {
 
     callback();
 }
 
-PickUp.prototype.listenForSequence(tones, duration, callback) {
+PickUp.prototype.listenForSequence = function(tones, duration, callback) {
 
 
     callback();
@@ -20,19 +20,19 @@ PickUp.prototype.listenForSequence(tones, duration, callback) {
 
 //Broadcasting
 
-PickUp.prototype.broadcast(message, callback) {
+PickUp.prototype.broadcast = function(message, callback) {
 
     callback();
 }
 
-PickUp.prototype.broadcast(message, options, callback) {
+PickUp.prototype.broadcast = function(message, options, callback) {
 
     callback();
 }
 
 //Both
 
-PickUp.prototype.broadcastAcknowledge(message, permittedResponses, callback) {
+PickUp.prototype.broadcastAcknowledge = function(message, permittedResponses, callback) {
 
 
 }
