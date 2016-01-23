@@ -1,7 +1,8 @@
 var RingBuffer = require('./ring-buffer.js');
 var SonicCoder = require('./sonic-coder.js');
 
-var audioContext = new window.AudioContext || new webkitAudioContext();
+
+var audioContext = new webkitAudioContext() || new window.AudioContext;
 /**
  * Extracts meaning from audio streams.
  *

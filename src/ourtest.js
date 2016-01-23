@@ -10,6 +10,7 @@ $(document).ready(function(){
     });
     $("#clicker").click(function(){
     window.addEventListener('touchstart', function() {
+        $("#status").html("touched");
     	// create empty buffer
     	var buffer = myContext.createBuffer(1, 1, 22050);
     	var source = myContext.createBufferSource();
@@ -20,6 +21,8 @@ $(document).ready(function(){
     
     	// play the file
     	source.noteOn(0);
+    	
+    	$("#status").html(source.playbackState);
     }, false);
 //        (xx._messageDelegatorConstructor(xx))($("#msg").val());
         xx.broadcast($("#msg").val(), {});

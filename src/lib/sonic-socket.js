@@ -52,6 +52,7 @@ SonicSocket.prototype.scheduleToneAt = function(freq, startTime, duration) {
   gainNode.connect(audioContext.destination);
 
   var osc = audioContext.createOscillator();
+  osc.type = 0;
   osc.frequency.value = freq;
   osc.connect(gainNode);
 
