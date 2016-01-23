@@ -12,25 +12,16 @@ var audioContext = new window.AudioContext || new webkitAudioContext();
  */
 function SonicSocket(params) {
   params = params || {};
-  this.coder = params.coder || new SonicCoder(params);
+  this.coder = params.coder || new SonicCoder();
   this.charDuration = params.charDuration || 0.2;
+  this.coder = params.coder || new SonicCoder(params);
   this.rampDuration = params.rampDuration || 0.001;
 }
 
 
 SonicSocket.prototype.send = function(input, opt_callback) {
   // Surround the word with start and end characters.
-  //input = this.coder.startChar + input + this.coder.endChar;
-  if (this.debug) {
-    console.log('Transcribed char: ' + char);
-  }
-  paraminput = input;
-  input = this.coder.startChar;
-  for(var i = 0; i < paraminput.length - 1; i++) {
-    input += paraminput[i] + "1";
-  }
-  input += paraminput[paraminput.length - 1] + this.coder.endChar;
-
+  input = this.coder.startChar + input + this.coder.endChar;
   // Use WAAPI to schedule the frequencies.
   for (var i = 0; i < input.length; i++) {
     var char = input[i];

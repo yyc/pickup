@@ -11,6 +11,7 @@ function PickUp() {
   this.listeners = [];
 
   this._createSonicNetwork();
+  console.log(this.filters);
 }
 
 util.inherits(PickUp, EventEmitter);
@@ -45,27 +46,12 @@ PickUp.prototype.removeListenerChar = function(event) {
     delete this.filters[event];
 }
 
-PickUp.prototype.listenForSequence = function(tones, duration, callback) {
-
-
-  callback();
-}
-
 //Broadcasting
 
 PickUp.prototype.broadcast = function(message, options) {
-    this.sonicSocket.send(message.toString());
-    console.log("broadcast: " + message);
+  console.log("broadcast: " + message);
+  this.sonicSocket.send(message.toString());
 }
-
-//Both
-
-PickUp.prototype.broadcastAcknowledge = function(message, permittedResponses, callback) {
-
-
-}
-
 
 //Others
-
 module.exports = PickUp;
