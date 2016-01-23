@@ -11159,7 +11159,6 @@ SonicServer.prototype.analysePeaks = function() {
     }
   } else if (this.state == State.RECV) {
       // If receiving, look for character changes.
-      console.log("RECEIVING" +char);
     if (char != this.lastChar &&
         char != this.coder.startChar && char != this.coder.endChar) {
       this.buffer += char;
@@ -11277,8 +11276,9 @@ var audioContext = new window.AudioContext || new webkitAudioContext();
  */
 function SonicSocket(params) {
   params = params || {};
+  this.coder = params.coder || new SonicCoder();
+  this.charDuration = params.charDuration || 0.2;
   this.coder = params.coder || new SonicCoder(params);
-  this.charDuration = params.charDuration || 0.3;
   this.rampDuration = params.rampDuration || 0.001;
 }
 
@@ -11286,16 +11286,6 @@ function SonicSocket(params) {
 SonicSocket.prototype.send = function(input, opt_callback) {
   // Surround the word with start and end characters.
   input = this.coder.startChar + input + this.coder.endChar;
-  console.log("inputlen: "+input.length);
-  /*paraminput = input;
-  input = this.coder.startChar;
-  for(var i = 0; i < paraminput.length - 1; i++) {
-    input += paraminput[i];
-  }
-  input += paraminput[paraminput.length - 1] + this.coder.endChar;
-  */
-  console.log("inputlen: "+input.length);
-
   // Use WAAPI to schedule the frequencies.
   for (var i = 0; i < input.length; i++) {
     var char = input[i];
@@ -11316,6 +11306,7 @@ SonicSocket.prototype.scheduleToneAt = function(freq, startTime, duration) {
   var gainNode = audioContext.createGain();
   // Gain => Merger
   gainNode.gain.value = 0;
+
   gainNode.gain.setValueAtTime(0, startTime);
   gainNode.gain.linearRampToValueAtTime(1, startTime + this.rampDuration);
   gainNode.gain.setValueAtTime(1, startTime + duration - this.rampDuration);
