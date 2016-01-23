@@ -1,0 +1,4 @@
+var x = require("./pickup.js");
+
+var xx = document.querySelector("#box");
+xx.style.b

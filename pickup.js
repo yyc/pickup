@@ -1,15 +1,4 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var SonicSocket = require('./sonic-socket.js');
-var SonicServer = require('./sonic-server.js');
-var SonicCoder = require('./sonic-coder.js');
-
-module.exports = {
-  SonicSocket: SonicSocket,
-  SonicServer: SonicServer,
-  SonicCoder: SonicCoder
-}
-
-},{"./sonic-coder.js":3,"./sonic-server.js":4,"./sonic-socket.js":5}],2:[function(require,module,exports){
 function RingBuffer(maxLength) {
   this.array = [];
   this.maxLength = maxLength;
@@ -60,7 +49,7 @@ RingBuffer.prototype.remove = function(index, length) {
 
 module.exports = RingBuffer;
 
-},{}],3:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
 /**
  * A simple sonic encoder/decoder for [a-z0-9] => frequency (and back).
  * A way of representing characters with frequency.
@@ -123,7 +112,7 @@ SonicCoder.prototype.freqToChar = function(freq) {
 
 module.exports = SonicCoder;
 
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 var RingBuffer = require('./ring-buffer.js');
 var SonicCoder = require('./sonic-coder.js');
 
@@ -424,7 +413,7 @@ SonicServer.prototype.restart = function() {
 
 module.exports = SonicServer;
 
-},{"./ring-buffer.js":2,"./sonic-coder.js":3}],5:[function(require,module,exports){
+},{"./ring-buffer.js":1,"./sonic-coder.js":2}],4:[function(require,module,exports){
 var SonicCoder = require('./sonic-coder.js');
 
 var audioContext = new window.AudioContext || new webkitAudioContext();
@@ -486,14 +475,19 @@ SonicSocket.prototype.scheduleToneAt = function(freq, startTime, duration) {
 
 module.exports = SonicSocket;
 
-},{"./sonic-coder.js":3}],6:[function(require,module,exports){
-var SonicNet = require("./lib/main.js");
-
+},{"./sonic-coder.js":2}],5:[function(require,module,exports){
+var SonicSocket = require('./lib/sonic-socket.js');
+var SonicServer = require('./lib/sonic-server.js');
+var SonicCoder = require('./lib/sonic-coder.js');
 function PickUp() {
+    var sonicSoc = 1;
+    var sonicSer = 2;
     
+        
 
 
 }
+PickUp.prototype.xx = 3;
 //Listening
 PickUp.prototype.listenFor = function(tone, duration, callback) {
 
@@ -530,4 +524,4 @@ PickUp.prototype.broadcastAcknowledge = function(message, permittedResponses, ca
 
 module.exports = PickUp;
 
-},{"./lib/main.js":1}]},{},[6]);
+},{"./lib/sonic-coder.js":2,"./lib/sonic-server.js":3,"./lib/sonic-socket.js":4}]},{},[5]);

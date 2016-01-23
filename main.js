@@ -1,10 +1,15 @@
-var SonicNet = require("./lib/main.js");
-
+var SonicSocket = require('./lib/sonic-socket.js');
+var SonicServer = require('./lib/sonic-server.js');
+var SonicCoder = require('./lib/sonic-coder.js');
 function PickUp() {
+    var sonicSoc = 1;
+    var sonicSer = 2;
     
+        
 
 
 }
+PickUp.prototype.xx = 3;
 //Listening
 PickUp.prototype.listenFor = function(tone, duration, callback) {
 

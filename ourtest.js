@@ -1,6 +1,3 @@
-var PickUp = require("/build/Pickup.js");
+var PickUp = require("./pickup.js");
 
-alert("HI");
-
-var x = new PickUp();
-alert(x.init);
+var xx = new PickUp();
