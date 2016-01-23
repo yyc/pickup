@@ -24,7 +24,7 @@ PickUp.prototype._createSonicNetwork = function(opt_coder) {
   this.sonicServer.start();
   console.log(this.sonicServer);
   var self = this;
-  this.sonicServer.on('message', this._messageDelegator(message));
+  this.sonicServer.on('message', this._messageDelegator;
 }
 PickUp.prototype._messageDelegator = function(message) {
     var self = this;
