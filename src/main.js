@@ -1,10 +1,13 @@
 var SonicSocket = require('./lib/sonic-socket.js');
 var SonicServer = require('./lib/sonic-server.js');
 var SonicCoder = require('./lib/sonic-coder.js');
-function PickUp() {
+var util = require("util");
+var EventEmitter = require("events");
+
+function PickUp(events) {
   this.sonicSocket = undefined;
   this.sonicServet = undefined;
-
+  this.filters = events;
   this.listeners = [];
 
   createSonicNetwork();
@@ -12,7 +15,7 @@ function PickUp() {
 
 function createSonicNetwork(opt_coder) {
   // Stop the sonic server if it is listening.
-  var ALPHABET = "temp";
+  var ALPHABET = "123456";
   this.sonicServer = new SonicServer({alphabet: ALPHABET, debug: false});
   this.sonicSocket = new SonicSocket({alphabet: ALPHABET});
 
@@ -23,38 +26,30 @@ function createSonicNetwork(opt_coder) {
 function messageDelegator(x) {
   console.log("MESSAGE RECEIVED");
   console.log(x);
-
+  for(event in this.filters){
+      if(x.match(this.filters[event])){
+            this.emit(event);
+      }
+  }
   //Iterate through all listeners, and call callbacks
+/*
+  
   for(var i = 0; i < this.listeners.length; i++) {
     var obj = this.listeners[i];
     if (obj.char === x) {
       (obj.callback)();
     }
   }
+*/
 }
 //Listening
-PickUp.prototype.listenFor = function(char, callback) {
-  var obj = {type: "char"};
-  obj.char = char;
-  obj.callback = callback;
-
-  this.listeners.push(obj);
+PickUp.prototype.listenFor = function(event, regex) {
+    this.filters[event] = regex;
 }
 
-PickUp.prototype.removeListenerChar = function(char) {
+PickUp.prototype.removeListenerChar = function(event) {
   // find listener(s)
-  var indexesToRemove = [];
-
-  for (var i = 0; i < this.listeners.length; i++) {
-    var obj = this.listeners[i];
-    if (obj.char === char) {
-      indexesToRemove.push(i);
-    }
-  }
-
-  for(var w = 0; w < indexesToRemove.length; w++) {
-    this.listeners.splice(indexesToRemove[w],1);
-  }
+    delete this.filters[event];
 }
 
 PickUp.prototype.listenForSequence = function(tones, duration, callback) {
