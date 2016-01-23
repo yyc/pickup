@@ -4,8 +4,9 @@ var SonicCoder = require('./lib/sonic-coder.js');
 function PickUp() {
   this.sonicSocket = undefined;
   this.sonicServet = undefined;
-  var sonicSoc = 1;
-  var sonicSer = 2;
+
+  this.listeners = [];
+
   createSonicNetwork();
 }
 
@@ -17,25 +18,26 @@ function createSonicNetwork(opt_coder) {
 
   this.sonicServer.start();
   console.log(this.sonicServer);
-  this.sonicServer.on('message', hihi);
+  this.sonicServer.on('message', messageDelegator);
 }
-function hihi(x) {
-  alert("MESSAGE RECEIVED");
-  console.log(x);
+function messageDelegator(x) {
+  console.log("MESSAGE RECEIVED");
+
 }
 //Listening
-PickUp.prototype.listenFor = function(tone, duration, callback) {
-    callback();
+PickUp.prototype.listenFor = function(tone, callback) {
+  var obj = {type: "tone"};
+  obj.tone = tone;
+
+  this.listeners.push(obj);
+
+  callback();
 }
 
-function hello(){
-
-
-}
 PickUp.prototype.listenForSequence = function(tones, duration, callback) {
 
 
-    callback();
+  callback();
 }
 
 //Broadcasting
@@ -46,8 +48,8 @@ PickUp.prototype.broadcast = function(message, callback) {
 }
 
 PickUp.prototype.broadcast = function(message, options, callback) {
-
-    callback();
+  this.sonicSocket.send(message.toString());
+  callback();
 }
 
 //Both
