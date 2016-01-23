@@ -45,23 +45,19 @@ PickUp.prototype.removeListenerChar = function(event) {
 }
 
 PickUp.prototype.listenForSequence = function(tones, duration, callback) {
-
-
   callback();
 }
 
 //Broadcasting
 
 PickUp.prototype.broadcast = function(message, options) {
-
   console.log("broadcast: " + message);
-    this.sonicSocket.send(message.toString());
+  this.sonicSocket.send(message.toString());
 }
 
 //Both
 
 PickUp.prototype.broadcastAcknowledge = function(message, permittedResponses, callback) {
-
 
 }
 

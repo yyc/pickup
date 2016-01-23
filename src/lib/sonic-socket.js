@@ -30,7 +30,7 @@ SonicSocket.prototype.send = function(input, opt_callback) {
   input += paraminput[paraminput.length - 1] + this.coder.endChar;
 
   console.log("inputlen: "+input.length);
-
+  
   // Use WAAPI to schedule the frequencies.
   for (var i = 0; i < input.length; i++) {
     var char = input[i];
