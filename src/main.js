@@ -44,10 +44,6 @@ PickUp.prototype.removeListenerChar = function(event) {
     delete this.filters[event];
 }
 
-PickUp.prototype.listenForSequence = function(tones, duration, callback) {
-  callback();
-}
-
 //Broadcasting
 
 PickUp.prototype.broadcast = function(message, options) {
@@ -55,13 +51,5 @@ PickUp.prototype.broadcast = function(message, options) {
   this.sonicSocket.send(message.toString());
 }
 
-//Both
-
-PickUp.prototype.broadcastAcknowledge = function(message, permittedResponses, callback) {
-
-}
-
-
 //Others
-
 module.exports = PickUp;

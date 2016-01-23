@@ -11159,6 +11159,7 @@ SonicServer.prototype.analysePeaks = function() {
     }
   } else if (this.state == State.RECV) {
       // If receiving, look for character changes.
+      console.log("RECEIVING" +char);
     if (char != this.lastChar &&
         char != this.coder.startChar && char != this.coder.endChar) {
       this.buffer += char;
@@ -11285,13 +11286,16 @@ function SonicSocket(params) {
 SonicSocket.prototype.send = function(input, opt_callback) {
   // Surround the word with start and end characters.
   //input = this.coder.startChar + input + this.coder.endChar;
+  /*console.log("inputlen: "+input.length);
   paraminput = input;
   input = this.coder.startChar;
   for(var i = 0; i < paraminput.length - 1; i++) {
-    input += paraminput[i] + "a";
+    input += paraminput[i];
   }
   input += paraminput[paraminput.length - 1] + this.coder.endChar;
 
+  console.log("inputlen: "+input.length);
+  */
   // Use WAAPI to schedule the frequencies.
   for (var i = 0; i < input.length; i++) {
     var char = input[i];
@@ -11312,7 +11316,6 @@ SonicSocket.prototype.scheduleToneAt = function(freq, startTime, duration) {
   var gainNode = audioContext.createGain();
   // Gain => Merger
   gainNode.gain.value = 0;
-
   gainNode.gain.setValueAtTime(0, startTime);
   gainNode.gain.linearRampToValueAtTime(1, startTime + this.rampDuration);
   gainNode.gain.setValueAtTime(1, startTime + duration - this.rampDuration);
@@ -11349,9 +11352,8 @@ util.inherits(PickUp, EventEmitter);
 
 PickUp.prototype._createSonicNetwork = function(opt_coder) {
   // Stop the sonic server if it is listening.
-  var ALPHABET = "123456";
-  this.sonicServer = new SonicServer({alphabet: ALPHABET, debug: true, freqMin: 19500, freqMax: 20600});
-  this.sonicSocket = new SonicSocket({alphabet: ALPHABET, debug: true, freqMin: 19500, freqMax: 20600});
+  this.sonicServer = new SonicServer({debug: true, freqMin: 19000, freqMax: 20600});
+  this.sonicSocket = new SonicSocket({debug: true, freqMin: 19000, freqMax: 20600});
 
   this.sonicServer.start();
   console.log(this.sonicServer);
@@ -11377,30 +11379,14 @@ PickUp.prototype.removeListenerChar = function(event) {
     delete this.filters[event];
 }
 
-PickUp.prototype.listenForSequence = function(tones, duration, callback) {
-
-
-  callback();
-}
-
 //Broadcasting
 
 PickUp.prototype.broadcast = function(message, options) {
-
   console.log("broadcast: " + message);
-    this.sonicSocket.send(message.toString());
+  this.sonicSocket.send(message.toString());
 }
-
-//Both
-
-PickUp.prototype.broadcastAcknowledge = function(message, permittedResponses, callback) {
-
-
-}
-
 
 //Others
-
 module.exports = PickUp;
 
 },{"./lib/sonic-coder.js":8,"./lib/sonic-server.js":9,"./lib/sonic-socket.js":10,"events":1,"util":5}],12:[function(require,module,exports){
