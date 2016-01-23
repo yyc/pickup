@@ -21,16 +21,16 @@ function SonicSocket(params) {
 SonicSocket.prototype.send = function(input, opt_callback) {
   // Surround the word with start and end characters.
   input = this.coder.startChar + input + this.coder.endChar;
-  /*console.log("inputlen: "+input.length);
-  paraminput = input;
+  console.log("inputlen: "+input.length);
+  /*paraminput = input;
   input = this.coder.startChar;
   for(var i = 0; i < paraminput.length - 1; i++) {
     input += paraminput[i];
   }
   input += paraminput[paraminput.length - 1] + this.coder.endChar;
-
-  console.log("inputlen: "+input.length);
   */
+  console.log("inputlen: "+input.length);
+
   // Use WAAPI to schedule the frequencies.
   for (var i = 0; i < input.length; i++) {
     var char = input[i];
