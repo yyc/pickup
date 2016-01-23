@@ -10,6 +10,6 @@ xx.on("message", function(message){
 
 $(document).ready(function(){
     $("#clicker").click(function(){
-        xx.broadcast("42", {});
+        xx.broadcast($("#msg").val(), {});
     })
 });
