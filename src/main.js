@@ -4,10 +4,10 @@ var SonicCoder = require('./lib/sonic-coder.js');
 var util = require("util");
 var EventEmitter = require("events");
 
-function PickUp(events) {
+function PickUp() {
   this.sonicSocket = undefined;
   this.sonicServet = undefined;
-  this.filters = events;
+  this.filters = [];
   this.listeners = [];
 
   this._createSonicNetwork();
@@ -17,22 +17,22 @@ util.inherits(PickUp, EventEmitter);
 
 PickUp.prototype._createSonicNetwork = function(opt_coder) {
   // Stop the sonic server if it is listening.
-  var ALPHABET = "123456";
-  this.sonicServer = new SonicServer({alphabet: ALPHABET, debug: true, freqMin: 19500, freqMax: 20600});
-  this.sonicSocket = new SonicSocket({alphabet: ALPHABET, freqMin: 19500, freqMax: 20600});
+  this.sonicServer = new SonicServer({debug: true, freqMin: 19500, freqMax: 20600});
+  this.sonicSocket = new SonicSocket({freqMin: 19500, freqMax: 20600});
 
   this.sonicServer.start();
   console.log(this.sonicServer);
   this.sonicServer.on('message', this._messageDelegator);
 }
 PickUp.prototype._messageDelegator = function(x) {
+    var self = this;
   console.log("MESSAGE RECEIVED");
   console.log(x);
-  for(event in this.filters){
-      if(x.match(this.filters[event])){
-            this.emit(event);
+  this.filters.forEach(function(elem){
+      if(x.match(elem.regex)){
+          self.emit(elem.event);
       }
-  }
+  });
 }
 
 //Listening

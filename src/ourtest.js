@@ -1,9 +1,9 @@
 var PickUp = require("./main.js");
 var $ = require("jquery");
 
-var opts = {"message": /.+/};
-var xx = new PickUp(opts);
+var xx = new PickUp();
 
+xx.listenFor("message", /.+/);
 xx.on("message", function(message){
     alert(message);
 });

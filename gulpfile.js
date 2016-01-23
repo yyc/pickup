@@ -11,12 +11,17 @@ gulp.task('watch', function() {
   gulp.watch('src/*.js', ['browserify']);
 });
 
-
 gulp.task('browserify', function() {
-   return browserify('src/ourtest.js')
-      .bundle()
-      .pipe(source('app.js'))
-      .pipe(gulp.dest('js'));
+    try{
+       var res = browserify('src/main.js')
+          .bundle()
+          .pipe(source('app.js'))
+          .pipe(gulp.dest('js'));
+      } catch(error){
+          console.log(error);
+      } finally{
+          return res || undefined;
+      }
 });
 gulp.task("livereload", function(){
     livereload.reload("index.html");
