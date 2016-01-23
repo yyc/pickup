@@ -11347,22 +11347,22 @@ PickUp.prototype._createSonicNetwork = function(opt_coder) {
   // Stop the sonic server if it is listening.
   this.sonicServer = new SonicServer({debug: true, freqMin: 19500, freqMax: 20500});
   this.sonicSocket = new SonicSocket({freqMin: 19500, freqMax: 20500});
-
   this.sonicServer.start();
   console.log(this.sonicServer);
   var self = this;
-  this.sonicServer.on('message', this._messageDelegator);
+  this.sonicServer.on('message', this._messageDelegatorConstructor(self));
 }
-PickUp.prototype._messageDelegator = function(message) {
-    var self = this;
-  console.log("MESSAGE RECEIVED");
-  console.log(message);
-  console.log(this);
-  this.filters.forEach(function(elem){
-      if(message.match(elem.regex)){
-          self.emit(elem.event, message);
-      }
-  });
+PickUp.prototype._messageDelegatorConstructor = function(self) {
+    return function(message){
+        console.log("MESSAGE RECEIVED");
+        console.log(message);
+        console.log(self);
+        self.filters.forEach(function(elem){
+          if(message.match(elem.regex)){
+              self.emit(elem.event, message);
+          }
+        });
+    }
 }
 
 //Listening
@@ -11392,7 +11392,7 @@ $(document).ready(function(){
         $("#log").append("<li>" + message + "</li>");
     });
     $("#clicker").click(function(){
-        xx._messageDelegator($("#msg").val());
+//        (xx._messageDelegatorConstructor(xx))($("#msg").val());
         xx.broadcast($("#msg").val(), {});
     })
 });

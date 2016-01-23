@@ -9,7 +9,7 @@ $(document).ready(function(){
         $("#log").append("<li>" + message + "</li>");
     });
     $("#clicker").click(function(){
-        xx._messageDelegator($("#msg").val());
+//        (xx._messageDelegatorConstructor(xx))($("#msg").val());
         xx.broadcast($("#msg").val(), {});
     })
 });
