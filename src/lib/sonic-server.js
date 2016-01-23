@@ -19,7 +19,7 @@ function SonicServer(params) {
   this.minRunLength = params.minRunLength || 2;
   this.coder = params.coder || new SonicCoder(params);
   // How long (in ms) to wait for the next character.
-  this.timeout = params.timeout || 300;
+  this.timeout = params.timeout || 1000;
   this.debug = !!params.debug;
 
   this.peakHistory = new RingBuffer(16);
