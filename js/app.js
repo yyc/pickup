@@ -11350,7 +11350,10 @@ PickUp.prototype._createSonicNetwork = function(opt_coder) {
 
   this.sonicServer.start();
   console.log(this.sonicServer);
-  this.sonicServer.on('message', this._messageDelegator);
+  var self = this;
+  this.sonicServer.on('message', function(message){
+      self._messageDelegator(message);
+  });
 }
 PickUp.prototype._messageDelegator = function(message) {
     var self = this;
