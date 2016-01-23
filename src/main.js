@@ -24,15 +24,13 @@ PickUp.prototype._createSonicNetwork = function(opt_coder) {
   this.sonicServer.start();
   console.log(this.sonicServer);
   var self = this;
-  this.sonicServer.on('message', function(message){
-      self._messageDelegator(message);
-  });
+  this.sonicServer.on('message', this._messageDelegator(message));
 }
 PickUp.prototype._messageDelegator = function(message) {
     var self = this;
   console.log("MESSAGE RECEIVED");
   console.log(message);
-  console.log(this.filters);
+  console.log(this);
   this.filters.forEach(function(elem){
       if(message.match(elem.regex)){
           self.emit(elem.event, message);
