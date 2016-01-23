@@ -11337,6 +11337,7 @@ function PickUp(events) {
   this.listeners = [];
 
   this._createSonicNetwork();
+  console.log(this.filters);
 }
 
 util.inherits(PickUp, EventEmitter);
