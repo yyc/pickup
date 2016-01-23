@@ -22,10 +22,12 @@ function find_servers() {
 	// --- Locate Broadcasting Signals ---
 
 	// --- End of Locate Broadcasting Signals ---
-	num_servers = 2;
+	num_servers = 4;
 	return [
 		make_server("Test Device", 0),
-		make_server("Test Device 2", 1)
+		make_server("Test Device 2", 1),
+		make_server("Test Device 3", 2),
+		make_server("Test Device 4", 3)
 	];
 }
 
@@ -43,6 +45,7 @@ function pair(server_id) {
 
 
 	if (success) {
+		select(server_id);
 		$("status"+server_id).style.backgroundColor = "#00FF00";
 		$("status"+server_id).innerHTML = "Connected";
 	} else {
@@ -58,23 +61,47 @@ function unpair(server_id) {
 
 	// --- End of Unpairing
 	$("chat"+server_id).innerHTML = "";
-	$("status"+server_id).style.backgroundColor = "#FFFFFF";
+	$("status"+server_id).style.backgroundColor = "#FFF";
 	$("status"+server_id).innerHTML = "Not Connected";
+	$("server"+server_id).style.backgroundColor = "#FFF";
+	if(selected_id == server_id) selected_id = -1;
 }
 
 // Send message to other side
-function send(server_id, is_broadcast) {
+function send(is_broadcast) {
 	// Check if server online
-	if ($("status"+server_id).innerHTML != "Connected") return;
+	for(var i = 0; i < num_servers && is_broadcast; i++) {
+		if($("status"+i).innerHTML == "Connected") {
+			$("chat"+i).innerHTML += "Me > " + $("message").value + "<br/>";
+		}
+	}
 
-	var message = is_broadcast ? $("broadcast_message").value
-							   : $("msg"+server_id).value;
+	if(!is_broadcast && selected_id != -1) {
+		$("chat"+selected_id).innerHTML += "Me > " + $("message").value + "<br/>";
+	}
+	$("main-chat").innerHTML = $("chat"+selected_id).innerHTML;
+	$("message").value = "";
 
-	$("chat"+server_id).innerHTML += "<b>Me</b> > " + message + "<br/>";
-	if(!is_broadcast) $("msg"+server_id).value = "";
 	// --- Message sending ---
 
 	// --- End of message sending ---
+}
+
+//IMPT server id
+var selected_id = -1;
+
+function select(server_id) {
+	if ($("status"+server_id).innerHTML != "Connected") return;
+	for(var i = 0; i < num_servers; i++) {
+		if(i == server_id) {
+			// Chinese New Year Huat Ah
+			$("server"+i).style.backgroundColor = "#DDDDDD";
+			selected_id = i;
+		} else {
+			$("server"+i).style.backgroundColor = "#FFF";
+		}
+	}
+	$("main-chat").innerHTML = $("chat"+selected_id).innerHTML;
 }
 
 function get_servers() {
@@ -83,27 +110,16 @@ function get_servers() {
 
 	var output = "";
 	for (var i = 0; i < servers.length; i++) {
-		output += "<div class='server'>";
+		output += "<div class='server' id='server"+i+"' onClick='select("+i+")'>";
 		output += "<div class='server-name'>"+servers[i].name+"</div>";
 		output += "<div class='server-connect'><button onClick='pair("+servers[i].id+")'>Connect</button><br/><button onClick='unpair("+servers[i].id+")'>Disconnect</button></div>";
 		output += "<div class='server-status' id='status"+servers[i].id+"'>Not Connected</div>";
 		output += "<div class='server-chat'>";
-		output += "<div id='chat"+servers[i].id+"'></div>";
-		output += "<textarea id='msg"+servers[i].id+"'></textarea>";
-		output += "<button onClick='send("+servers[i].id+", false)'>Send</button>";
+		output += "<div id='chat"+servers[i].id+"' style='display:none;'></div>";
+		//output += "<textarea id='msg"+servers[i].id+"'></textarea>";
+		//output += "<button onClick='send("+servers[i].id+", false)'>Send</button>";
 		output += "</div>";
 		output += "</div>";
 	}
 	$("servers").innerHTML = output;
-}
-
-// Broadcasting
-
-function broadcast() {
-	for(var i = 0; i < num_servers; i++) {
-		if($("status"+i).innerHTML == "Connected") {
-			send(i, true);
-		}
-	}
-	$("broadcast_message").value = "";
 }
