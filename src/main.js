@@ -48,6 +48,7 @@ PickUp.prototype.broadcast = function(message, callback) {
 }
 
 PickUp.prototype.broadcast = function(message, options, callback) {
+  alert("CALLED");
   this.sonicSocket.send(message.toString());
   callback();
 }
