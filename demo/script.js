@@ -13,12 +13,16 @@ function make_server(name, id) {
 	};
 }
 
-// Find Server using ultrasound
+// Find Server usin g ultrasound
 // Returns list of servers (created with make_server)
+
+var num_servers = 0;
+
 function find_servers() {
 	// --- Locate Broadcasting Signals ---
 
 	// --- End of Locate Broadcasting Signals ---
+	num_servers = 2;
 	return [
 		make_server("Test Device", 0),
 		make_server("Test Device 2", 1)
@@ -47,13 +51,27 @@ function pair(server_id) {
 	}
 }
 
+// Unpairing
+function unpair(server_id) {
+
+	// --- Unpairing Code ---
+
+	// --- End of Unpairing
+	$("chat"+server_id).innerHTML = "";
+	$("status"+server_id).style.backgroundColor = "#FFFFFF";
+	$("status"+server_id).innerHTML = "Not Connected";
+}
+
 // Send message to other side
-function send(server_id) {
+function send(server_id, is_broadcast) {
 	// Check if server online
-	if ($("status"+server_id).style.backgroundColor != rgb(0,255,0)) return;
+	if ($("status"+server_id).innerHTML != "Connected") return;
 
-	$("chat"+server_id).innerHTML += "Me > " + $("msg"+server_id).value;
+	var message = is_broadcast ? $("broadcast_message").value
+							   : $("msg"+server_id).value;
 
+	$("chat"+server_id).innerHTML += "<b>Me</b> > " + message + "<br/>";
+	if(!is_broadcast) $("msg"+server_id).value = "";
 	// --- Message sending ---
 
 	// --- End of message sending ---
@@ -67,14 +85,25 @@ function get_servers() {
 	for (var i = 0; i < servers.length; i++) {
 		output += "<div class='server'>";
 		output += "<div class='server-name'>"+servers[i].name+"</div>";
-		output += "<div class='server-connect'><button onClick='pair("+servers[i].id+")'>Connect</button></div>";
-		output += "<div class='server-status' id='status"+servers[i].id+"'></div>";
+		output += "<div class='server-connect'><button onClick='pair("+servers[i].id+")'>Connect</button><br/><button onClick='unpair("+servers[i].id+")'>Disconnect</button></div>";
+		output += "<div class='server-status' id='status"+servers[i].id+"'>Not Connected</div>";
 		output += "<div class='server-chat'>";
 		output += "<div id='chat"+servers[i].id+"'></div>";
 		output += "<textarea id='msg"+servers[i].id+"'></textarea>";
-		output += "<button onClick='send("+servers[i].id+")'>Send</button>";
+		output += "<button onClick='send("+servers[i].id+", false)'>Send</button>";
 		output += "</div>";
 		output += "</div>";
 	}
 	$("servers").innerHTML = output;
+}
+
+// Broadcasting
+
+function broadcast() {
+	for(var i = 0; i < num_servers; i++) {
+		if($("status"+i).innerHTML == "Connected") {
+			send(i, true);
+		}
+	}
+	$("broadcast_message").value = "";
 }
