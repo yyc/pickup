@@ -5,22 +5,34 @@
 		<link rel="stylesheet" type="text/css" href="style.css"/>
 	</head>
 	<body onLoad="initialize();">
-		<h1>List of Servers</h1>
-		<div id="servers">
-		</div>
 
-		<!-- Buttons -->
-		<div id="options">
-			<button id="refresh" onClick="get_servers();">Refresh</button>
-		</div>
+		<!-- Banner -->
+		<header>
+			Pickup
+		</header>
 
-		<!-- Broadcast -->
-		<hr>
-		<h1>Broadcasting</h1>
-		<div id="broadcart">
-			<textarea id="broadcast_message"></textarea>
-			<button onClick="broadcast();">Broadcast</button>
-		</div>
+		<main>
+			<div class = 'server-screen'>
+				<!-- Server List -->
+				<h1>List of Servers</h1>
+				<button id="refresh" onClick="get_servers();">Refresh</button> <br/>
+				<div id="servers">
+				</div>
 
+			</div>
+
+			<!-- Broadcast -->
+			<div class = 'chat-screen'>
+				<h1> Chat </h1>
+				<div id='main-chat'></div><br/>
+				<textarea id="message"></textarea>
+				<button onClick="send(false);">Send</Button>
+				<button onClick="send(true);">Broadcast</button>
+			</div>
+		</main>
+
+		<footer>
+			A random production for Hack 'n' Roll 2016.
+		</footer>
 	</body>
 </html>
