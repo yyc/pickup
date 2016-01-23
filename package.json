@@ -4,6 +4,7 @@
   "description": "Ultrasonic pairing for webapps",
   "main": "server.js",
   "dependencies": {
+    "gulp": "^3.9.0",
     "jquery": "^2.2.0"
   },
   "devDependencies": {

@@ -21,10 +21,13 @@ function SonicSocket(params) {
 SonicSocket.prototype.send = function(input, opt_callback) {
   // Surround the word with start and end characters.
   //input = this.coder.startChar + input + this.coder.endChar;
+  if (this.debug) {
+    console.log('Transcribed char: ' + char);
+  }
   paraminput = input;
   input = this.coder.startChar;
   for(var i = 0; i < paraminput.length - 1; i++) {
-    input += paraminput[i] + "#";
+    input += paraminput[i] + "1";
   }
   input += paraminput[paraminput.length - 1] + this.coder.endChar;
 

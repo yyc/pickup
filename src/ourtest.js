@@ -8,6 +8,7 @@ xx.on("message", function(message){
     alert(message);
 });
 
+
 $(document).ready(function(){
     $("#clicker").click(function(){
         xx.broadcast($("#msg").val(), {});

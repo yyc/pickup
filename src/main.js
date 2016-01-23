@@ -55,6 +55,7 @@ PickUp.prototype.listenForSequence = function(tones, duration, callback) {
 
 PickUp.prototype.broadcast = function(message, options) {
     this.sonicSocket.send(message.toString());
+    console.log("broadcast: " + message);
 }
 
 //Both
