@@ -11291,6 +11291,7 @@ SonicSocket.prototype.send = function(input, opt_callback) {
     var char = input[i];
     var freq = this.coder.charToFreq(char);
     var time = audioContext.currentTime + this.charDuration * i;
+    console.log(freq, time, this.charDuration);
     this.scheduleToneAt(freq, time, this.charDuration);
   }
 
@@ -11351,20 +11352,21 @@ PickUp.prototype._createSonicNetwork = function(opt_coder) {
   console.log(this.sonicServer);
   this.sonicServer.on('message', this._messageDelegator);
 }
-PickUp.prototype._messageDelegator = function(x) {
+PickUp.prototype._messageDelegator = function(message) {
     var self = this;
   console.log("MESSAGE RECEIVED");
-  console.log(x);
+  console.log(message);
+  console.log(this.filters);
   this.filters.forEach(function(elem){
-      if(x.match(elem.regex)){
-          self.emit(elem.event);
+      if(message.match(elem.regex)){
+          self.emit(elem.event, message);
       }
   });
 }
 
 //Listening
 PickUp.prototype.listenFor = function(event, regex) {
-    this.filters[event] = regex;
+    this.filters.push({'event': event, 'regex': regex});
 }
 
 PickUp.prototype.removeListenerChar = function(event) {
@@ -11390,9 +11392,10 @@ var xx = new PickUp();
 
 xx.listenFor("message", /.+/);
 xx.on("message", function(message){
-    alert(message);
+    $("#log").append("<li>" + message + "</li>");
 });
-
+$(document).ready(function(){
+});
 
 $(document).ready(function(){
     $("#clicker").click(function(){

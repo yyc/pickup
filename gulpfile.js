@@ -8,7 +8,7 @@ gulp.task('watch', function() {
   livereload.listen({
   });
   gulp.watch(["*.html", "*/*.js"], ['livereload']);
-  gulp.watch('src/*.js', ['browserify']);
+  gulp.watch(['src/*.js', 'src/*/*.js'], ['browserify']);
 });
 
 gulp.task('browserify', function() {

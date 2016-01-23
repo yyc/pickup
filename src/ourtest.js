@@ -5,9 +5,10 @@ var xx = new PickUp();
 
 xx.listenFor("message", /.+/);
 xx.on("message", function(message){
-    alert(message);
+    $("#log").append("<li>" + message + "</li>");
 });
-
+$(document).ready(function(){
+});
 
 $(document).ready(function(){
     $("#clicker").click(function(){
