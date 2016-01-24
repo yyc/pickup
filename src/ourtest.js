@@ -44,9 +44,9 @@ $(document).ready(function(){
         console.log(match);
         //expand match[1];
 
-        var colour = match[1][0] + match[1][0];
-        colour += match[1][0] + match[1][0];
-        colour += match[1][0] + match[1][0];
+        var colour = "e" + match[1][0];
+        colour += "f" + match[1][0];
+        colour += "d" + match[1][0];
 
         $("#log").append("<li style='background-color:#"+colour+"''>" + match[2] + "</li>");
     });
