@@ -17,6 +17,8 @@ $(document).ready(function(){
 	})
 	socket.on("id", function(id){
     	socket.bbId = id;
+    	console.log("Got ID " + id);
+    	$("#serverId").html(id);
     	if(socket.mode == "host"){
         	host();
     	} else if(socket.mode == "client"){
@@ -27,9 +29,11 @@ $(document).ready(function(){
 
 function host(){
 	if(socket.bbId && socket.mode){
+    	socket.emit("host");
         pu.listenFor("connection", /[[:digit:]]+/);
         pu.on("connection", function(message){
             $("#users").append("<li>" + message + "</li>");
+            socket.emit("register", message);
         });
         socket.on("bbChange", function(message){
             $("#billboard h1").html(message.title);
@@ -40,10 +44,11 @@ function host(){
 }
 function client(){
 	if(socket.bbId && socket.mode){
+    	socket.emit("client");
         pu.broadcast(""+id);
         socket.on("server", function(server){
-            socket.servers = socket.servers || [];
-            socket.servers.push(server);
+            socket.servers = socket.servers || {};
+            socket.servers[server.id] = server;
             get_servers();
         });
 	}
