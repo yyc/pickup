@@ -1,74 +1,59 @@
 var PickUp = require("./main.js");
 var $ = require("jquery");
-
+var io = require("socket.io-client");
+window.jQuery = $;
+window.$ = window.jQuery;
+require("bootstrap");
+var pu = new PickUp();
+var socket = io();
 
 // What to do when page loads
 $(document).ready(function(){
-	get_servers();    
+    socket = io();
+	$("#startModal").modal();
+	$("#host").click(function(){
+    	socket.mode = "host";
+    	host();
+	})
+	socket.on("id", function(id){
+    	socket.bbId = id;
+    	if(socket.mode == "host"){
+        	host();
+    	} else if(socket.mode == "client"){
+        	client();
+    	}
+	});
 });
 
-// Structure of Server
-function make_server(name, id) {
-	return {
-		"name": name,
-		"id": id
-	};
-}
-
-// Find Server usin g ultrasound
-// Returns list of servers (created with make_server)
-
-var num_servers = 0;
-
-function find_servers() {
-	// --- Locate Broadcasting Signals ---
-
-	// --- End of Locate Broadcasting Signals ---
-	num_servers = 4;
-	return [
-		make_server("Test Device", 0),
-		make_server("Test Device 2", 1),
-		make_server("Test Device 3", 2),
-		make_server("Test Device 4", 3)
-	];
-}
-
-// Initiate Pairing convention
-function pair(server_id) {
-
-
-	// Set to true if successful, false otherwise
-	var success = true;
-	// --- Pairing ---
-
-	// --- End of Pairing ---
-
-	alert(server_id);
-
-
-	if (success) {
-		select(server_id);
-		$("status"+server_id).style.backgroundColor = "#00FF00";
-		$("status"+server_id).innerHTML = "Connected";
-	} else {
-		$("status"+server_id).style.backgroundColor = "#FF0000";
-		$("status"+server_id).innerHTML = "Error";
+function host(){
+	if(socket.bbId && socket.mode){
+        pu.listenFor("connection", /[[:digit:]]+/);
+        pu.on("connection", function(message){
+            $("#users").append("<li>" + message + "</li>");
+        });
+        socket.on("bbChange", function(message){
+            $("#billboard h1").html(message.title);
+            $("#billboard #author").html
+        })
 	}
+    
 }
-
-// Unpairing
-function unpair(server_id) {
-
-	// --- Unpairing Code ---
-
-	// --- End of Unpairing
-	$("chat"+server_id).innerHTML = "";
-	$("status"+server_id).style.backgroundColor = "#FFF";
-	$("status"+server_id).innerHTML = "Not Connected";
-	$("server"+server_id).style.backgroundColor = "#FFF";
-	if(selected_id == server_id) selected_id = -1;
+function client(){
+	if(socket.bbId && socket.mode){
+        pu.broadcast(""+id);
+        socket.on("server", function(server){
+            socket.servers = socket.servers || [];
+            socket.servers.push(server);
+            get_servers();
+        });
+	}
+    
 }
+//very clever anti-OOP methods hehe
 
+
+// Find Server using ultrasound
+// Returns list of servers (created with make_server)
 // Send message to other side
 function send(is_broadcast) {
 	// Check if server online
@@ -108,20 +93,57 @@ function select(server_id) {
 
 function get_servers() {
 
-	var servers = find_servers();
-
 	var output = "";
-	for (var i = 0; i < servers.length; i++) {
+	for (var i = 0; i < socket.servers.length; i++) {
 		output += "<div class='server' id='server"+i+"' onClick='select("+i+")'>";
-		output += "<div class='server-name'>"+servers[i].name+"</div>";
-		output += "<div class='server-connect'><button onClick='pair("+servers[i].id+")'>Connect</button><br/><button onClick='unpair("+servers[i].id+")'>Disconnect</button></div>";
-		output += "<div class='server-status' id='status"+servers[i].id+"'>Not Connected</div>";
+		output += "Currently Displaying: <div class='server-name'>"+servers[i].title+"</div>";
+		output += "<a class='btn btn-default' onClick='edit("+servers[i].id+")'>Edit</a>";
+/*
 		output += "<div class='server-chat'>";
 		output += "<div id='chat"+servers[i].id+"' style='display:none;'></div>";
+*/
 		//output += "<textarea id='msg"+servers[i].id+"'></textarea>";
 		//output += "<button onClick='send("+servers[i].id+", false)'>Send</button>";
 		output += "</div>";
-		output += "</div>";
+// 		output += "</div>";
 	}
-	$("servers").innerHTML = output;
+	$("servers").html(output);
 }
+
+
+// Initiate Pairing convention
+function pair(server_id) {
+
+
+	// Set to true if successful, false otherwise
+	var success = true;
+	// --- Pairing ---
+
+	// --- End of Pairing ---
+
+	alert(server_id);
+
+
+	if (success) {
+		select(server_id);
+		$("status"+server_id).style.backgroundColor = "#00FF00";
+		$("status"+server_id).innerHTML = "Connected";
+	} else {
+		$("status"+server_id).style.backgroundColor = "#FF0000";
+		$("status"+server_id).innerHTML = "Error";
+	}
+}
+
+// Unpairing
+function unpair(server_id) {
+
+	// --- Unpairing Code ---
+
+	// --- End of Unpairing
+	$("chat"+server_id).innerHTML = "";
+	$("status"+server_id).style.backgroundColor = "#FFF";
+	$("status"+server_id).innerHTML = "Not Connected";
+	$("server"+server_id).style.backgroundColor = "#FFF";
+	if(selected_id == server_id) selected_id = -1;
+}
+

@@ -3,8 +3,9 @@ var livereload = require("gulp-livereload");
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var browserify = require('browserify');
+var nodemon = require("gulp-nodemon");
 
-gulp.task('watch', function() {
+gulp.task('watch', ['start'], function() {
   livereload.listen({
   });
   gulp.watch(["*.html", "*/*.js"], ['livereload']);
@@ -15,11 +16,16 @@ gulp.task('browserify', function() {
        var res = browserify('src/chat.js')
           .bundle()
           .pipe(source('chat.js'))
-          .pipe(gulp.dest('js'))
-          .on("error", function(error){
-              console.log(error);
-          });
+          .on("error", console.log)
+          .pipe(gulp.dest('js'));
 });
 gulp.task("livereload", function(){
-    livereload.reload("index.html");
+    livereload.reload("chat.js");
 });
+gulp.task('start', function () {
+  nodemon({
+    script: 'server.js'
+  , ext: 'js'
+  , env: { 'NODE_ENV': 'development' }
+  })
+})

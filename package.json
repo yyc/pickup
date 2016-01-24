@@ -4,14 +4,19 @@
   "description": "Ultrasonic pairing for webapps",
   "main": "server.js",
   "dependencies": {
+    "bootstrap": "^3.3.6",
+    "express": "^4.13.4",
     "gulp": "^3.9.0",
-    "jquery": "^2.2.0"
+    "jquery": "^2.2.0",
+    "socket.io": "^1.4.4",
+    "socket.io-client": "^1.4.4"
   },
   "devDependencies": {
     "browserify": "^13.0.0",
     "browserify-shim": "^3.8.12",
     "gulp": "^3.9.0",
     "gulp-livereload": "^3.8.1",
+    "gulp-nodemon": "^2.0.6",
     "gulp-uglify": "^1.5.1",
     "vinyl-source-stream": "^1.1.0",
     "vinyl-transform": "^1.0.0"
@@ -36,6 +41,7 @@
   },
   "browserify-shim": {
     "./pickup.js": "pickup",
+    "lib/bootstrap.min.js": "bootstrap",
     "lib/main.js": {
       "depends": [
         "lib/sonic-server.js",
