@@ -5,7 +5,7 @@ function makeid(){
     var text = "";
     var possible = "ABCDEF0123456789";
 
-    for( var i=0; i < 5; i++ )
+    for( var i=0; i < 6; i++ )
         text += possible.charAt(Math.floor(Math.random() * possible.length));
 
     return text;
