@@ -5,7 +5,7 @@ function makeid(){
     var text = "";
     var possible = "ABCDEF0123456789";
 
-    for( var i=0; i < 6; i++ )
+    for( var i=0; i < 3; i++ )
         text += possible.charAt(Math.floor(Math.random() * possible.length));
 
     return text;
@@ -40,8 +40,14 @@ $(document).ready(function(){
         var match = regex.exec(message);
 
         console.log(match);
+        //expand match[1];
 
-        $("#log").append("<li style=background-color:#'"+match[1]+"'>" + message[2] + "</li>");
+        var colour = match[1][0] + match[1][0];
+        colour += match[1][1] + match[1][1];
+        colour += match[1][2] + match[1][2];
+
+
+        $("#log").append("<li style=background-color:'#"+colour+"'>" + message[2] + "</li>");
     });
 
     xx.on("vanillamessage", function(message){
