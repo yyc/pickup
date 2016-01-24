@@ -13,7 +13,7 @@ $(document).ready(function(){
       var match = regex.exec(message);
       //alert(match[1] + ": " + match[2]);
       //broadcast ack
-      xx.broacast(match[2]);
+      xx.broadcast(match[2]);
       //receive
       xx.emit("message", match[1]);
 
