@@ -20492,7 +20492,7 @@ $(document).ready(function(){
 function host(){
 	if(socket.bbId && socket.mode){
     	socket.emit("host");
-        pu.listenFor("connection", /[[0123456789]+/);
+        pu.listenFor("connection", /^\d+$/);
         pu.on("connection", function(message){
             $("#users").append("<li>" + message.message + "</li>");
             socket.emit("register", message.message);
@@ -20501,8 +20501,9 @@ function host(){
             console.log("message event" + message);
             });
         socket.on("bbChange", function(message){
+            console.log("Billboard Change");
             $("#billboard h1").html(message.title);
-            $("#billboard #author").html
+            $("#billboard #author").html(message.id);
         })
 	}
     
@@ -20510,6 +20511,10 @@ function host(){
 function client(){
 	if(socket.bbId && socket.mode){
     	socket.emit("client");
+    	$("#refresh").click(function(){
+    socket.servers = {};
+    pu.broadcast(socket.bbId, socket.bbId);
+});
         pu.broadcast(socket.bbId, socket.bbId);
         socket.on("server", function(server){
             console.log("Got server " + JSON.stringify(server));
@@ -20569,9 +20574,9 @@ function get_servers() {
 	for (var id in keys) {
         if (socket.servers.hasOwnProperty(keys[id])) {
         	var server = socket.servers[keys[id]];
-    		output += "<div class='server' id='server"+id+"' onClick='select("+id+")'>";
-    		output += "Currently Displaying: <span class='server-name'>"+server.title+"</span>";
-    		output += "<a class='btn btn-default' onClick='edit("+id+")'>Edit</a>";
+    		output += "<div class='server' id='server"+id+"'>";
+    		output += "Currently Displaying: <span class='server-name'>"+server.title+"</span> ";
+    		output += "<a class='btn btn-default' data-target='"+keys[id]+"' data-title='" + server.title + "'>Edit</a>";
     /*
     		output += "<div class='server-chat'>";
     		output += "<div id='chat"+servers[i].id+"' style='display:none;'></div>";
@@ -20583,6 +20588,20 @@ function get_servers() {
         }
 	}
 	$("#servers").html(output);
+	$("#servers a").click(function(e){
+    	var target = $(this).data("target");
+    	$("#editModal .btn-primary").data("target", target);
+    	$("#editModal").modal();
+    	$("#new-title").attr("placeholder", $(this).data("title"));
+    	$("#editModal .btn-primary").click(function(){
+        	console.log($("#new-title").val());
+            $("#editModal").modal('hide');
+        	socket.emit("changeTitle", {
+            	title: $("#new-title").val(),
+            	id: $(this).data("target")
+        	});
+    	});
+	});
 }
 
 
