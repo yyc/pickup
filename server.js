@@ -56,6 +56,9 @@ io.on("connection", function(socket){
         });
     });
     socket.id = sockets.push(socket) - 1;
+    if(socket.id % 11 == 0 || socket.id % 111 == 0){
+        socket.id = sockets.push(socket) - 1;
+    }
     socket.emit("id", socket.id);
     console.log("issued " + socket.id);
 });
