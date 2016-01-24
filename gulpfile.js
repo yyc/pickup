@@ -13,7 +13,7 @@ gulp.task('watch', ['start'], function() {
 });
 
 gulp.task('browserify', function() {
-       var res = browserify('src/chat.js')
+       var res = browserify('src/ourtest.js')
           .bundle()
           .pipe(source('chat.js'))
           .on("error", console.log)
@@ -28,4 +28,4 @@ gulp.task('start', function () {
   , ext: 'js'
   , env: { 'NODE_ENV': 'development' }
   })
-})
+});

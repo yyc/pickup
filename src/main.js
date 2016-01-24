@@ -30,11 +30,17 @@ PickUp.prototype._messageDelegatorConstructor = function(self) {
         console.log("MESSAGE RECEIVED");
         console.log(message);
         console.log(self);
-        self.filters.forEach(function(elem){
+        if (self.filters.some(function(elem){
           if(message.match(elem.regex)){
               self.emit(elem.event, message);
+              return true;
           }
-        });
+          return false;
+        })) {
+
+        } else {
+            self.emit("vanillamessage", message);
+        }
     }
 }
 
@@ -45,9 +51,14 @@ PickUp.prototype.listenFor = function(event, regex) {
 
 //Broadcasting
 
-PickUp.prototype.broadcast = function(message, options) {
+PickUp.prototype.broadcast = function(id, message, options) {
   console.log("broadcast: " + message);
-  this.sonicSocket.send(message.toString());
+  this.sonicSocket.send(id+"#@"+message.toString());
+}
+
+PickUp.prototype.broadcastandreceiveack = function(message,option) {
+  console.log("HI");
+
 }
 
 //Others
