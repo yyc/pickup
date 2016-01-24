@@ -11401,8 +11401,12 @@ $(document).ready(function(){
     xx.on("reqreply", function(message) {
       var regex = /(\w+)@!#(\w+)/;
       var match = regex.exec(message);
-      console.log(match);
-      alert(match[0] + ": " + match[1]);
+      //alert(match[1] + ": " + match[2]);
+      //broadcast ack
+      xx.broacast(match[2]);
+      //receive
+      xx.emit("message", match[1]);
+
     });
 
     xx.on("message", function(message){
