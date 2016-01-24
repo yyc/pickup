@@ -2,15 +2,15 @@ var PickUp = require("./main.js");
 var $ = require("jquery");
 
 function makeid(){
-    var text = "";
+    /*var text = "";
     var possible = "abcdef0123456789";
 
     //for( var i=0; i < 3; i++ )
     text += possible.charAt(Math.floor(Math.random() * 6));
     text += possible.charAt(Math.floor(Math.random() * 10 + 6));
     text += possible.charAt(Math.floor(Math.random() * 6));
-
-    return text;
+    */
+    return Math.floor(Math.random() * 10);
 }
 
 $(document).ready(function(){
@@ -45,8 +45,8 @@ $(document).ready(function(){
         //expand match[1];
 
         var colour = match[1][0] + match[1][0];
-        colour += match[1][1] + match[1][1];
-        colour += match[1][1] + match[1][1];
+        colour += match[1][0] + match[1][0];
+        colour += match[1][0] + match[1][0];
 
         $("#log").append("<li style='background-color:#"+colour+"''>" + match[2] + "</li>");
     });
