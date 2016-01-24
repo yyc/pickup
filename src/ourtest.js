@@ -77,9 +77,7 @@ $(document).ready(function(){
         xx.broadcast(window.ourid,$("#msg").val(), {});
     })
     $('#bnack').click(function() {
-
-
-
+          xx.broadcast(window.ourid,$("#msg").val(), {});
 
     });
 });
