@@ -11278,7 +11278,7 @@ var audioContext = new window.AudioContext || new webkitAudioContext();
 function SonicSocket(params) {
   params = params || {};
   this.coder = params.coder || new SonicCoder();
-  this.charDuration = params.charDuration || 0.2;
+  this.charDuration = params.charDuration || 0.4;
   this.coder = params.coder || new SonicCoder(params);
   this.rampDuration = params.rampDuration || 0.001;
 }
