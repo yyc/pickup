@@ -11408,7 +11408,7 @@ $(document).ready(function(){
     $("#identity").text("ID: "+ourid);
 
     xx.listenFor("reqreply", /\w+@!#\w+/);
-    xx.listenFor("message", /\w+#!\w+/);
+    xx.listenFor("message", /\w+#@\w+/);
     //xx.listenFor("message", /.+/);
 
 
