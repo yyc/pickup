@@ -1,37 +1,64 @@
 <!DOCTYPE html>
 <html>
 	<head>
-    	<script src="../js/chat.js"></script>
 		<link rel="stylesheet" type="text/css" href="style.css"/>
+		<link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
 	</head>
 	<body>
-		<!-- Banner -->
-		<header>
-			Pickup
-		</header>
-
-		<main>
-			<div class = 'server-screen'>
-				<!-- Server List -->
-				<h1>List of Servers</h1>
-				<button id="refresh" onClick="get_servers();">Refresh</button> <br/>
-				<div id="servers">
-				</div>
-
-			</div>
-
-			<!-- Broadcast -->
-			<div class = 'chat-screen'>
-				<h1> Chat </h1>
-				<div id='main-chat'></div><br/>
-				<textarea id="message"></textarea>
-				<button onClick="send(false);">Send</Button>
-				<button onClick="send(true);">Broadcast</button>
-			</div>
-		</main>
-
-		<footer>
-			A random production for Hack 'n' Roll 2016.
-		</footer>
+        <div class="modal fade" tabindex="-1" role="dialog" id="startModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Host or Connect to Billboard?</h4>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="host" data-dismiss="modal">Host</button>
+                <button type="button" class="btn btn-primary" id="connect" data-dismiss="modal">Connect</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <div class="container-fluid">
+    		<!-- Banner -->
+    		<div class="container-fluid fixed">
+    			pickup.js demo (Billboard)
+    		</div>
+    
+    		<div class="container-fluid client">
+    			<div class = 'col-md-6'>
+    				<!-- Server List -->
+    				<h1>List of Servers</h1>
+    				<button id="refresh" onClick="get_servers();">Refresh</button> <br/>
+    				<div id="servers">
+    				</div>
+    
+    			</div>
+    
+    			<!-- Broadcast -->
+    			<div class = 'col-md-3'>
+    				<h1> Chat </h1>
+    				<div id='main-chat'></div><br/>
+    				<textarea id="message"></textarea>
+    				<button onClick="send(false);">Send</Button>
+    				<button onClick="send(true);">Broadcast</button>
+    			</div>
+    		</div>
+    		<div class="container-fluid billboard hidden">
+    			<div class = 'col-md-8' id="billboard">
+                    <h1></h1>
+                    <div id="author"></div>
+    			</div>
+    			<ul class = 'col-md-4' id="users">
+                    
+    			</ul>
+    		</div>
+    		<div class="container-fluid footer">
+    			A random production for Hack 'n' Roll 2016.
+    		</div>
+        </div>
+    	<script src="/js/chat.js"></script>
+<!--     	<script src="/js/bootstrap.min.js" -->
+<!--         <script src="/socket.io/socket.io.js"></script> -->
 	</body>
 </html>
