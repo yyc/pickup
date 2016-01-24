@@ -6,8 +6,8 @@ $(document).ready(function(){
 
     xx.listenFor("reqreply", /\w+@!#\w+/);
 
-    //xx.listenFor("message", /.+/);
-    
+    xx.listenFor("message", /.+/);
+
     xx.on("reqreply", function(message) {
       var regex = /\w+@!#\w+/;
       var match = regex.exec(message);
