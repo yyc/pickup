@@ -11366,7 +11366,7 @@ PickUp.prototype._messageDelegatorConstructor = function(self) {
         })) {
 
         } else {
-            self.emit("vanillamessage");
+            self.emit("vanillamessage", message);
         }
     }
 }
@@ -11442,7 +11442,7 @@ $(document).ready(function(){
         colour += match[1][1] + match[1][1];
         colour += match[1][1] + match[1][1];
 
-        $("#log").append("<li style='background-color:#"+colour+"''>" + message[2] + "</li>");
+        $("#log").append("<li style='background-color:#"+colour+"''>" + match[2] + "</li>");
     });
 
     xx.on("vanillamessage", function(message){

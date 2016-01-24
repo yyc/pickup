@@ -37,7 +37,7 @@ PickUp.prototype._messageDelegatorConstructor = function(self) {
         })) {
 
         } else {
-            self.emit("vanillamessage");
+            self.emit("vanillamessage", message);
         }
     }
 }
