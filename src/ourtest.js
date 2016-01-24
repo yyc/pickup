@@ -4,18 +4,19 @@ var $ = require("jquery");
 $(document).ready(function(){
     var xx = new PickUp();
 
-    xx.listenFor("message", /.+/);
     xx.listenFor("reqreply", /\w+@!#\w+/);
 
-    xx.on("message", function(message){
-        $("#log").append("<li>" + message + "</li>");
-    });
-
+    //xx.listenFor("message", /.+/);
+    
     xx.on("reqreply", function(message) {
       var regex = /\w+@!#\w+/;
       var match = regex.exec(message);
 
       alert(match[0] + ": " + match[1]);
+    });
+
+    xx.on("message", function(message){
+        $("#log").append("<li>" + message + "</li>");
     });
 
 
