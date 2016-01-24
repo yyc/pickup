@@ -11359,7 +11359,7 @@ PickUp.prototype._messageDelegatorConstructor = function(self) {
         console.log("MESSAGE RECEIVED");
         console.log(message);
         console.log(self);
-        self.filters.forEach(function(elem){
+        self.filters.some(function(elem){
           if(message.match(elem.regex)){
               self.emit(elem.event, message);
           }
