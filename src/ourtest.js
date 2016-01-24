@@ -46,8 +46,7 @@ $(document).ready(function(){
 
         var colour = match[1][0] + match[1][0];
         colour += match[1][1] + match[1][1];
-        colour += match[1][2] + match[1][2];
-
+        colour += match[1][1] + match[1][1];
 
         $("#log").append("<li style=background-color:'#"+colour+"'>" + message[2] + "</li>");
     });
