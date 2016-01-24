@@ -50,5 +50,10 @@ PickUp.prototype.broadcast = function(message, options) {
   this.sonicSocket.send(message.toString());
 }
 
+PickUp.prototype.broadcastandreceiveack = function(message,option) {
+  console.log("HI");
+
+}
+
 //Others
 module.exports = PickUp;
