@@ -11391,12 +11391,26 @@ module.exports = PickUp;
 var PickUp = require("./main.js");
 var $ = require("jquery");
 
+function makeid(){
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 5; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
 $(document).ready(function(){
     var xx = new PickUp();
+    var ourid = makeid();
+
+    $("#identity").text("ID: "+ourid);
 
     xx.listenFor("reqreply", /\w+@!#\w+/);
+    xx.listenFor("message", /\w+#!\w+/);
+    //xx.listenFor("message", /.+/);
 
-    xx.listenFor("message", /.+/);
 
     xx.on("reqreply", function(message) {
       var regex = /(\w+)@!#(\w+)/;
