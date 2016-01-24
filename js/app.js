@@ -11380,9 +11380,9 @@ PickUp.prototype.listenFor = function(event, regex) {
 
 //Broadcasting
 
-PickUp.prototype.broadcast = function(message, options) {
+PickUp.prototype.broadcast = function(id, message, options) {
   console.log("broadcast: " + message);
-  this.sonicSocket.send(message.toString());
+  this.sonicSocket.send(id+"#@"+message.toString());
 }
 
 PickUp.prototype.broadcastandreceiveack = function(message,option) {
@@ -11398,20 +11398,20 @@ var PickUp = require("./main.js");
 var $ = require("jquery");
 
 function makeid(){
-    var text = "";
+    /*var text = "";
     var possible = "abcdef0123456789";
 
     //for( var i=0; i < 3; i++ )
     text += possible.charAt(Math.floor(Math.random() * 6));
     text += possible.charAt(Math.floor(Math.random() * 10 + 6));
     text += possible.charAt(Math.floor(Math.random() * 6));
-
-    return text;
+    */
+    return Math.floor(Math.random() * 10);
 }
 
 $(document).ready(function(){
     var xx = new PickUp();
-    var ourid = makeid();
+    window.ourid = makeid();
 
     $("#identity").text("ID: "+ourid);
 
@@ -11425,7 +11425,7 @@ $(document).ready(function(){
       var match = regex.exec(message);
       //alert(match[1] + ": " + match[2]);
       //broadcast ack
-      xx.broadcast(match[2]);
+      xx.broadcast(window.ourid,match[2]);
       //receive
       xx.emit("message", match[1]);
 
@@ -11441,8 +11441,8 @@ $(document).ready(function(){
         //expand match[1];
 
         var colour = match[1][0] + match[1][0];
-        colour += match[1][1] + match[1][1];
-        colour += match[1][1] + match[1][1];
+        colour += match[1][0] + match[1][0];
+        colour += match[1][0] + match[1][0];
 
         $("#log").append("<li style='background-color:#"+colour+"''>" + match[2] + "</li>");
     });
@@ -11470,7 +11470,7 @@ $(document).ready(function(){
     	$("#status").html(source.playbackState);
     }, false);
 //        (xx._messageDelegatorConstructor(xx))($("#msg").val());
-        xx.broadcast($("#msg").val(), {});
+        xx.broadcast(window.ourid,$("#msg").val(), {});
     })
     $('#bnack').click(function() {
 

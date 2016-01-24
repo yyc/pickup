@@ -15,7 +15,7 @@ function makeid(){
 
 $(document).ready(function(){
     var xx = new PickUp();
-    var ourid = makeid();
+    window.ourid = makeid();
 
     $("#identity").text("ID: "+ourid);
 
@@ -29,7 +29,7 @@ $(document).ready(function(){
       var match = regex.exec(message);
       //alert(match[1] + ": " + match[2]);
       //broadcast ack
-      xx.broadcast(match[2]);
+      xx.broadcast(window.ourid,match[2]);
       //receive
       xx.emit("message", match[1]);
 
@@ -74,7 +74,7 @@ $(document).ready(function(){
     	$("#status").html(source.playbackState);
     }, false);
 //        (xx._messageDelegatorConstructor(xx))($("#msg").val());
-        xx.broadcast($("#msg").val(), {});
+        xx.broadcast(window.ourid,$("#msg").val(), {});
     })
     $('#bnack').click(function() {
 

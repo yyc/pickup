@@ -51,9 +51,9 @@ PickUp.prototype.listenFor = function(event, regex) {
 
 //Broadcasting
 
-PickUp.prototype.broadcast = function(message, options) {
+PickUp.prototype.broadcast = function(id, message, options) {
   console.log("broadcast: " + message);
-  this.sonicSocket.send(message.toString());
+  this.sonicSocket.send(id+"#@"+message.toString());
 }
 
 PickUp.prototype.broadcastandreceiveack = function(message,option) {
