@@ -14,7 +14,7 @@ gulp.task('watch', function() {
 gulp.task('browserify', function() {
        var res = browserify('src/ourtest.js')
           .bundle()
-          .pipe(source('ourtest.js'))
+          .pipe(source('app.js'))
           .pipe(gulp.dest('js'))
           .on("error", function(error){
               console.log(error);
