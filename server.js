@@ -14,23 +14,30 @@ server.listen(port, function () {
 });
 
 io.on("connection", function(socket){
-    var type = "";
+    socket.type = "";
     socket.on("host", function(data){ // Register as host
         socket.clients = [];
-        socket.title = ["Title!"];
+        socket.title = "Title!";
         socket.author = socket.id;
-        socket.on("register", function(id){ // 
+        socket.type = "host"
+        socket.on("register", function(id){
             id = parseInt(id);
-            if(!isNan(id) && socket[id]){
-                if(socket.connected){
-                    socket.emit("server",  {title: socket.title,
+            console.log("Registered " + id + " to " + socket.id);
+            if(!isNaN(id) && sockets[id]){
+                console.log(id + " is valid socket");
+                if(sockets[id].connected){
+                    console.log(id + " is connected");
+                    sockets[id].emit("server",  {title: socket.title,
                                             id: socket.id,
                                             author: socket.id});
+                } else{
+                    console.log(id + " is not connected");
                 }
             }
         });
     });
     socket.on("client", function(data){
+        socket.type = "client";
         socket.server = [];
     });
     socket.id = sockets.push(socket) - 1;

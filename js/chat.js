@@ -20469,8 +20469,14 @@ $(document).ready(function(){
 	$("#startModal").modal();
 	$("#host").click(function(){
     	socket.mode = "host";
+    	$(".client").hide();
     	host();
-	})
+	});
+	$("#connect").click(function(){
+    	socket.mode = "client";
+    	$(".billboard").hide();
+    	client();
+	});
 	socket.on("id", function(id){
     	socket.bbId = id;
     	console.log("Got ID " + id);
@@ -20486,11 +20492,14 @@ $(document).ready(function(){
 function host(){
 	if(socket.bbId && socket.mode){
     	socket.emit("host");
-        pu.listenFor("connection", /[[:digit:]]+/);
+        pu.listenFor("connection", /[[0123456789]+/);
         pu.on("connection", function(message){
-            $("#users").append("<li>" + message + "</li>");
-            socket.emit("register", message);
+            $("#users").append("<li>" + message.message + "</li>");
+            socket.emit("register", message.message);
         });
+        pu.on("vanillamessage", function(message){
+            console.log("message event" + message);
+            });
         socket.on("bbChange", function(message){
             $("#billboard h1").html(message.title);
             $("#billboard #author").html
@@ -20501,8 +20510,9 @@ function host(){
 function client(){
 	if(socket.bbId && socket.mode){
     	socket.emit("client");
-        pu.broadcast(""+id);
+        pu.broadcast(socket.bbId, socket.bbId);
         socket.on("server", function(server){
+            console.log("Got server " + JSON.stringify(server));
             socket.servers = socket.servers || {};
             socket.servers[server.id] = server;
             get_servers();
@@ -20553,22 +20563,26 @@ function select(server_id) {
 }
 
 function get_servers() {
-
 	var output = "";
-	for (var i = 0; i < socket.servers.length; i++) {
-		output += "<div class='server' id='server"+i+"' onClick='select("+i+")'>";
-		output += "Currently Displaying: <div class='server-name'>"+servers[i].title+"</div>";
-		output += "<a class='btn btn-default' onClick='edit("+servers[i].id+")'>Edit</a>";
-/*
-		output += "<div class='server-chat'>";
-		output += "<div id='chat"+servers[i].id+"' style='display:none;'></div>";
-*/
-		//output += "<textarea id='msg"+servers[i].id+"'></textarea>";
-		//output += "<button onClick='send("+servers[i].id+", false)'>Send</button>";
-		output += "</div>";
-// 		output += "</div>";
+	console.log(socket.servers);
+    var keys = Object.keys(socket.servers);	
+	for (var id in keys) {
+        if (socket.servers.hasOwnProperty(keys[id])) {
+        	var server = socket.servers[keys[id]];
+    		output += "<div class='server' id='server"+id+"' onClick='select("+id+")'>";
+    		output += "Currently Displaying: <span class='server-name'>"+server.title+"</span>";
+    		output += "<a class='btn btn-default' onClick='edit("+id+")'>Edit</a>";
+    /*
+    		output += "<div class='server-chat'>";
+    		output += "<div id='chat"+servers[i].id+"' style='display:none;'></div>";
+    */
+    		//output += "<textarea id='msg"+servers[i].id+"'></textarea>";
+    		//output += "<button onClick='send("+servers[i].id+", false)'>Send</button>";
+    		output += "</div>";
+    // 		output += "</div>";
+        }
 	}
-	$("servers").html(output);
+	$("#servers").html(output);
 }
 
 
@@ -21121,11 +21135,17 @@ PickUp.prototype._messageDelegatorConstructor = function(self) {
     return function(message){
         console.log("MESSAGE RECEIVED");
         console.log(message);
+        message = message.split("#@");
+        var id = message[0];
+        message = message[1] || message[0];
         console.log(self);
         if (self.filters.some(function(elem){
+            
           if(message.match(elem.regex)){
-              self.emit(elem.event, message);
+              self.emit(elem.event, {id: id, message: message});
               return true;
+          } else{
+              console.log(message + " does not match " + elem.regex);
           }
           return false;
         })) {

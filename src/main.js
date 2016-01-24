@@ -29,11 +29,17 @@ PickUp.prototype._messageDelegatorConstructor = function(self) {
     return function(message){
         console.log("MESSAGE RECEIVED");
         console.log(message);
+        message = message.split("#@");
+        var id = message[0];
+        message = message[1] || message[0];
         console.log(self);
         if (self.filters.some(function(elem){
+            
           if(message.match(elem.regex)){
-              self.emit(elem.event, message);
+              self.emit(elem.event, {id: id, message: message});
               return true;
+          } else{
+              console.log(message + " does not match " + elem.regex);
           }
           return false;
         })) {

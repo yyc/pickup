@@ -23,6 +23,7 @@
     		<!-- Banner -->
     		<div class="container-fluid fixed">
     			pickup.js demo (Billboard)
+    			<span class="right" id="serverId"></span>
     		</div>
     
     		<div class="container-fluid client">
@@ -32,10 +33,8 @@
     				<button id="refresh" onClick="get_servers();">Refresh</button> <br/>
     				<div id="servers">
     				</div>
-    
     			</div>
-    
-    			<!-- Broadcast -->
+<!--
     			<div class = 'col-md-3'>
     				<h1> Chat </h1>
     				<div id='main-chat'></div><br/>
@@ -43,8 +42,9 @@
     				<button onClick="send(false);">Send</Button>
     				<button onClick="send(true);">Broadcast</button>
     			</div>
+-->
     		</div>
-    		<div class="container-fluid billboard hidden">
+    		<div class="container-fluid billboard">
     			<div class = 'col-md-8' id="billboard">
                     <h1></h1>
                     <div id="author"></div>

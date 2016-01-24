@@ -8,12 +8,12 @@ var nodemon = require("gulp-nodemon");
 gulp.task('watch', ['start'], function() {
   livereload.listen({
   });
-  gulp.watch(["*.html", "*/*.js"], ['livereload']);
   gulp.watch(['src/*.js', 'src/*/*.js'], ['browserify']);
+  gulp.watch(["*.html", "*/*.js"], ['livereload']);
 });
 
 gulp.task('browserify', function() {
-       var res = browserify('src/ourtest.js')
+       var res = browserify('src/chat.js')
           .bundle()
           .pipe(source('chat.js'))
           .on("error", console.log)
