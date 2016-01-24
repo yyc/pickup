@@ -3,7 +3,7 @@ var $ = require("jquery");
 
 function makeid(){
     var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var possible = "ABCDEF0123456789";
 
     for( var i=0; i < 5; i++ )
         text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -19,7 +19,7 @@ $(document).ready(function(){
 
     xx.listenFor("reqreply", /\w+@!#\w+/);
     xx.listenFor("message", /\w+#@\w*/);
-    //xx.listenFor("message", /.+/);
+    xx.listenFor("vanillamessage", /.+/);
 
 
     xx.on("reqreply", function(message) {
@@ -40,10 +40,13 @@ $(document).ready(function(){
         var match = regex.exec(message);
 
         console.log(match);
-        
-        $("#log").append("<li>" + message + "</li>");
+
+        $("#log").append("<li style=background-color:#'"+match[1]+"'>" + message[2] + "</li>");
     });
 
+    xx.on("vanillamessage", function(message){
+        $("#log").append("<li>" + message + "</li>");
+    });
 
     $("#clicker").click(function(){
     window.addEventListener('touchstart', function() {
