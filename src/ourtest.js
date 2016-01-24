@@ -18,7 +18,7 @@ $(document).ready(function(){
     $("#identity").text("ID: "+ourid);
 
     xx.listenFor("reqreply", /\w+@!#\w+/);
-    xx.listenFor("message", /\w+#@\w+/);
+    xx.listenFor("message", /\w+#@\w*/);
     //xx.listenFor("message", /.+/);
 
 
@@ -34,6 +34,13 @@ $(document).ready(function(){
     });
 
     xx.on("message", function(message){
+      //Support two types of message(s), one without an id identifier #@
+      //and one with
+        var regex = /(\w+)#@(\w*)/;
+        var match = regex.exec(message);
+
+        console.log(match);
+        
         $("#log").append("<li>" + message + "</li>");
     });
 
