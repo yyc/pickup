@@ -27,6 +27,7 @@ io.on("connection", function(socket){
             if(!isNaN(id) && sockets[id]){
                 console.log(id + " is valid socket");
                 if(sockets[id].connected){
+                    socket.clients.push(id);
                     console.log(id + " is connected");
                     sockets[id].server.push(socket.id);
                     sockets[id].emit("server",  {title: socket.title,
@@ -51,6 +52,7 @@ io.on("connection", function(socket){
                     console.log(JSON.stringify(message) + " to " + id);
                     sockets[id].emit("bbChange", {title: title,
                                                   id: socket.id});
+                    sockets[id].server
                 }
             }
         });
