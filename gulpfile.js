@@ -12,9 +12,9 @@ gulp.task('watch', function() {
 });
 
 gulp.task('browserify', function() {
-       var res = browserify('src/chat.js')
+       var res = browserify('src/ourtest.js')
           .bundle()
-          .pipe(source('chat.js'))
+          .pipe(source('ourtest.js'))
           .pipe(gulp.dest('js'))
           .on("error", function(error){
               console.log(error);
