@@ -11362,7 +11362,9 @@ PickUp.prototype._messageDelegatorConstructor = function(self) {
         if (self.filters.some(function(elem){
           if(message.match(elem.regex)){
               self.emit(elem.event, message);
+              return true;
           }
+          return false;
         })) {
 
         } else {
