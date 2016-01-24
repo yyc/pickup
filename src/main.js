@@ -30,11 +30,15 @@ PickUp.prototype._messageDelegatorConstructor = function(self) {
         console.log("MESSAGE RECEIVED");
         console.log(message);
         console.log(self);
-        self.filters.some(function(elem){
+        if (self.filters.some(function(elem){
           if(message.match(elem.regex)){
               self.emit(elem.event, message);
           }
-        });
+        })) {
+
+        } else {
+            self.emit("vanillamessage");
+        }
     }
 }
 

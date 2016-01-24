@@ -11359,11 +11359,15 @@ PickUp.prototype._messageDelegatorConstructor = function(self) {
         console.log("MESSAGE RECEIVED");
         console.log(message);
         console.log(self);
-        self.filters.some(function(elem){
+        if (self.filters.some(function(elem){
           if(message.match(elem.regex)){
               self.emit(elem.event, message);
           }
-        });
+        })) {
+
+        } else {
+            self.emit("vanillamessage");
+        }
     }
 }
 
@@ -11411,7 +11415,7 @@ $(document).ready(function(){
 
     xx.listenFor("reqreply", /\w+@!#\w+/);
     xx.listenFor("message", /\w+#@\w*/);
-    xx.listenFor("vanillamessage", /.+/);
+    //xx.listenFor("vanillamessage", /.+/);
 
 
     xx.on("reqreply", function(message) {

@@ -21,7 +21,7 @@ $(document).ready(function(){
 
     xx.listenFor("reqreply", /\w+@!#\w+/);
     xx.listenFor("message", /\w+#@\w*/);
-    xx.listenFor("vanillamessage", /.+/);
+    //xx.listenFor("vanillamessage", /.+/);
 
 
     xx.on("reqreply", function(message) {
