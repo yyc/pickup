@@ -11,7 +11,7 @@ $(document).ready(function(){
     xx.on("reqreply", function(message) {
       var regex = /(\w+)@!#(\w+)/;
       var match = regex.exec(message);
-
+      console.log(match);
       alert(match[0] + ": " + match[1]);
     });
 
