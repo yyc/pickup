@@ -5,9 +5,20 @@ $(document).ready(function(){
     var xx = new PickUp();
 
     xx.listenFor("message", /.+/);
+    xx.listenFor("reqreply", /\w+@!#\w+/);
+
     xx.on("message", function(message){
         $("#log").append("<li>" + message + "</li>");
     });
+
+    xx.on("reqreply", function(message) {
+      var regex = /\w+@!#\w+/;
+      var match = regex.exec(message);
+
+      alert(match[0] + ": " + match[1]);
+    });
+
+
     $("#clicker").click(function(){
     window.addEventListener('touchstart', function() {
         $("#status").html("touched");
@@ -30,7 +41,7 @@ $(document).ready(function(){
         xx.broadcast($("#msg").val(), {});
     })
     $('#bnack').click(function() {
-      window
+
 
 
 
